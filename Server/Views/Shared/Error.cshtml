@@ -2,7 +2,7 @@
     ViewData["Title"] = "Ошибка";
 }
 
-<h1 class="text-danger">Страна «@ViewBag.NameNotFound» страна не найдена.</h1>
+<h1 class="text-danger">@ViewBag.NameNotFound</h1>
 
 <h4>Желаете добавить новую страну?</h4>
 <a asp-controller="Home" asp-action="Create">Добавить страну</a>

@@ -118,5 +118,12 @@ namespace Server
                 .Where(c => c.Name.ToLower() == name.ToLower())
                 .FirstOrDefault();
         }
+
+        public bool IsVerified(City city)
+        {
+            City findedCity = GetCityByName(city.Name);
+
+            return findedCity.Сountry == null;
+        }
     }
 }

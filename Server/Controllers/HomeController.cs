@@ -37,7 +37,7 @@ namespace Server.Controllers
 
             if (country == null)
             {
-                ViewBag.NameNotFound = name;
+                ViewBag.NameNotFound =$"Страна «{name}» страна не найдена.";
                 return View("Error");
             }
 
@@ -55,6 +55,11 @@ namespace Server.Controllers
         [HttpPost]
         public IActionResult Create(Сountry сountry)
         {
+            if (!_service.IsVerified(сountry.Capital))
+            {
+                ViewBag.NameNotFound = $"Город «{сountry.Capital.Name}» является столицей другой страны.";
+                return View("Error");
+            }
             _service.AddСountry(сountry);
 
             return RedirectToAction(nameof(Index));

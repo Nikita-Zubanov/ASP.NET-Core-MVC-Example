@@ -21,5 +21,7 @@ namespace Server
         City GetCityByName(string name);
         Region GetRegionByName(string name);
         Сountry GetСountryByName(string name);
+
+        bool IsVerified(City city);
     }
 }
