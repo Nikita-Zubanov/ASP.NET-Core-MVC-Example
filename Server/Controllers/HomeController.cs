@@ -60,13 +60,13 @@ namespace Server.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Edit(string name, string countryCode, decimal area, int population, string capitalName, string regionName)
+        public IActionResult Edit(string name, string countryCode, string area, int population, string capitalName, string regionName)
         {
             Сountry сountry = new Сountry
             {
                 Name = name,
                 СountryCode = countryCode,
-                Area = area,
+                Area = Convert.ToDecimal(area),
                 Population = population,
                 Capital = new City { Name = capitalName },
                 Region = new Region { Name = regionName }
