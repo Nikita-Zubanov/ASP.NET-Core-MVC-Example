@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Server.Models.Сountry>
+@{
+    ViewData["Title"] = "Все страны";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.СountryCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Population)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Capital)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Region)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var modelItem in Model)
+        {
+            <tr>
+                <td>
+                    @modelItem.Name
+                </td>
+                <td>
+                    @modelItem.СountryCode
+                </td>
+                <td>
+                    @modelItem.Area
+                </td>
+                <td>
+                    @modelItem.Population
+                </td>
+                <td>
+                    @modelItem.Capital.Name
+                </td>
+                <td>
+                    @modelItem.Region.Name
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
