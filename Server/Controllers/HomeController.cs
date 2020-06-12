@@ -37,7 +37,7 @@ namespace Server.Controllers
 
             if (country == null)
             {
-                ViewBag.NameNotFound =$"Страна «{name}» страна не найдена.";
+                ViewBag.ErrorMessage = $"Страна «{name}» страна не найдена.";
                 return View("Error");
             }
 
@@ -57,7 +57,7 @@ namespace Server.Controllers
         {
             if (!_service.IsVerified(сountry.Capital))
             {
-                ViewBag.NameNotFound = $"Город «{сountry.Capital.Name}» является столицей другой страны.";
+                ViewBag.ErrorMessage = $"Город «{сountry.Capital.Name}» является столицей другой страны.";
                 return View("Error");
             }
             _service.AddСountry(сountry);
