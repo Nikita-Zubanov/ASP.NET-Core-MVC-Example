@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,10 +16,13 @@ namespace Server.Controllers
     public class HomeController : Controller
     {
         private readonly ICountriesService _service;
+        static readonly HttpClient client = new HttpClient();
 
         public HomeController(ICountriesService service)
         {
             _service = service;
+
+            client.BaseAddress ??= new Uri("https://restcountries.eu/");
         }
 
         public IActionResult Index()
@@ -25,47 +31,32 @@ namespace Server.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Details(string name)
+        {
+            string path = $"rest/v2/name/{name}";
+            var response = await client.GetAsync(path);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return View("Error", new Error(
+                    response.StatusCode,
+                    $"Страна «{name}» не найдена."));
+            }
+            else
+            {
+                var countriesList = await response.Content.ReadAsAsync<IList<Сountry>>();
+                Сountry country = countriesList.First();
+
+                return View(country);
+            }
+        }
         public IActionResult AllDetails()
         {
             var countries = _service.GetСountries();
-
             return View(countries);
         }
-        public IActionResult Details(string name)
-        {
-            var country = _service.GetСountryByName(name);
 
-            if (country == null)
-            {
-                ViewBag.ErrorMessage = $"Страна «{name}» страна не найдена.";
-                return View("Error");
-            }
-
-            return View(country);
-        }
-
-        public IActionResult Create()
-        {
-            Сountry сountry = new Сountry { Capital = new City(), Region = new Region() };
-            ViewBag.Cities = _service.GetCities();
-            ViewBag.Regions = _service.GetRegions();
-
-            return View(сountry);
-        }
-        [HttpPost]
-        public IActionResult Create(Сountry сountry)
-        {
-            if (!_service.IsVerified(сountry.Capital))
-            {
-                ViewBag.ErrorMessage = $"Город «{сountry.Capital.Name}» является столицей другой страны.";
-                return View("Error");
-            }
-            _service.AddСountry(сountry);
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Edit(string name, string countryCode, string area, int population, string capitalName, string regionName)
+        public IActionResult Save(string name, string countryCode, string area, int population, string capitalName, string regionName)
         {
             Сountry сountry = new Сountry
             {
@@ -76,10 +67,9 @@ namespace Server.Controllers
                 Capital = new City { Name = capitalName },
                 Region = new Region { Name = regionName }
             };
-            ViewBag.Cities = _service.GetCities();
-            ViewBag.Regions = _service.GetRegions();
+            _service.AddСountry(сountry);
 
-            return View("Create", сountry);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

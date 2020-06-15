@@ -81,14 +81,6 @@ namespace Server
             _context.SaveChanges();
         }
 
-        public IEnumerable<City> GetCities()
-        {
-            return _context.Cities;
-        }
-        public IEnumerable<Region> GetRegions()
-        {
-            return _context.Regions;
-        }
         public IEnumerable<Сountry> GetСountries()
         {
             return _context.Сountries
@@ -117,13 +109,6 @@ namespace Server
                 .Include(c => c.Region)
                 .Where(c => c.Name.ToLower() == name.ToLower())
                 .FirstOrDefault();
-        }
-
-        public bool IsVerified(City city)
-        {
-            City findedCity = GetCityByName(city.Name);
-
-            return findedCity.Сountry == null;
         }
     }
 }

@@ -25,6 +25,8 @@ namespace Server
             services.AddTransient<ICountriesService, CountriesService>();
 
             services.AddControllersWithViews();
+
+            services.AddCors();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,6 +43,8 @@ namespace Server
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseCors(builder => builder.AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

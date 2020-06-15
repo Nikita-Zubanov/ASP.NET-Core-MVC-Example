@@ -2,28 +2,10 @@
 @{
     ViewData["Title"] = "Главная страница";
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#MyInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#myUl li").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
 
 <form asp-controller="Home" asp-action="Details" method="get">
     <p>
         Название страны: <input type="text" asp-for="Name" id="MyInput" required />
         <input type="submit" value="Найти" />
     </p>
-    <br>
-    <ul class="list-group" id="myUl">
-        @foreach (var item in ViewBag.Countries)
-        {
-            <li class="list-group-item">@item.Name</li>
-        }
-    </ul>
 </form>

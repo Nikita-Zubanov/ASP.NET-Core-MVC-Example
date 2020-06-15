@@ -14,14 +14,10 @@ namespace Server
 
         void UpdateСountry(Сountry beforeCountry, ref Сountry afterСountry);
 
-        IEnumerable<City> GetCities();
-        IEnumerable<Region> GetRegions();
         IEnumerable<Сountry> GetСountries();
 
         City GetCityByName(string name);
         Region GetRegionByName(string name);
         Сountry GetСountryByName(string name);
-
-        bool IsVerified(City city);
     }
 }

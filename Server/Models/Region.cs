@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,5 +13,10 @@ namespace Server.Models
         public string Name { get; set; }
 
         public IList<Сountry> Сountries { get; set; }
+
+        public static implicit operator Region(string name)
+        {
+            return new Region { Name = name };
+        }
     }
 }

@@ -10,7 +10,7 @@ using Server;
 namespace Server.Migrations
 {
     [DbContext(typeof(CountriesDbContext))]
-    [Migration("20200612055453_init")]
+    [Migration("20200615033042_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
